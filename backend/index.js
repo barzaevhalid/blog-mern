@@ -8,7 +8,7 @@ app.use(express.json())
 app.use(routes)
 app.listen(PORT, async () => {
     try {
-       await mongoose.connect('mongodb+srv://admin:12345@blog.ebupt36.mongodb.net/?retryWrites=true&w=majority')
+       await mongoose.connect('mongodb+srv://admin:12345@blog.ebupt36.mongodb.net/blog?retryWrites=true&w=majority')
         console.log('SERVER START ON PORT: ' + PORT )
         console.log('Успешное подключение к базе данных')
     } catch (e) {
