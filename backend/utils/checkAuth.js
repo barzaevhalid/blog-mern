@@ -7,7 +7,7 @@ export default (req, res, next) => {
             req.userId = decode._id
             next()
         } catch (e) {
-            return  res.status(403).json({message: "Нет доступ"})
+            return  res.status(403).json({message: "Нет доступа"})
         }
     } else {
         return res.status(403).json({message: "Нет доступа"})
