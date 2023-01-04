@@ -1,11 +1,30 @@
-import express from "express"
+import express from "express";
+import multer from 'multer';
 import mongoose from "mongoose";
 import routes from "./routes/index.js";
-const PORT = 4444
-const app = express()
+import checkAuth from "./utils/checkAuth.js";
+const PORT = 4444;
+const app = express();
+
+const storage = multer.diskStorage({
+    destination: (_, __, cb) => {
+        cb(null, 'uploads')
+    },
+    filename: (_, file, cb) => {
+        cb(null, file.originalname)
+    },
+});
+const upload = multer({storage});
 
 app.use(express.json())
 app.use(routes)
+app.use('/uploads', express.static('uploads'))
+
+app.post('/uploads', checkAuth, upload.single('image'), (req, res) => {
+    res.json({
+        url: `/uploads/${req.file.originalname}`
+    })
+})
 app.listen(PORT, async () => {
     try {
        await mongoose.connect('mongodb+srv://admin:12345@blog.ebupt36.mongodb.net/blog?retryWrites=true&w=majority')
