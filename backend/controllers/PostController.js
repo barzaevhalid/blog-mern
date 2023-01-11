@@ -24,7 +24,7 @@ export const getOne = async (req, res) => {
             },
        (error, doc) => {
                 if(error) {
-                    res.status(500).json({message: "Не удалось вернуть статью"})
+                   return  res.status(500).json({message: "Не удалось вернуть статью"})
                 }
                 if (!doc) {
                    return res.status(404).json({
