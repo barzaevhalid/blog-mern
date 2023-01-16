@@ -10,7 +10,9 @@ function App() {
     const dispatch = useDispatch();
     const isAuth = useSelector(selectIsAuth);
     useEffect(() => {
-        dispatch(fetchAuthMe());
+        if(window.localStorage.getItem('token')) {
+            dispatch(fetchAuthMe());
+        }
     },[])
   return (
     <>
