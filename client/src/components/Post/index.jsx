@@ -10,6 +10,8 @@ import styles from './Post.module.scss';
 import { UserInfo } from '../UserInfo';
 import { PostSkeleton } from './Skeleton';
 import {Link} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {fetchRemovePost} from "../../redux/slices/posts";
 
 export const Post = ({
   id,
@@ -25,10 +27,15 @@ export const Post = ({
   isLoading,
   isEditable,
 }) => {
+  const dispatch = useDispatch();
   if (isLoading) {
     return <PostSkeleton />;
   }
-  const onClickRemove = () => {};
+  const onClickRemove = (id) => {
+    if(window.confirm('Вы действительно хотите удалить статью ?')) {
+      dispatch(fetchRemovePost(id))
+    };
+  };
 
   return (
       <div className={clsx(styles.root, {[styles.rootFull]: isFullPost})}>
@@ -39,7 +46,7 @@ export const Post = ({
                   <EditIcon/>
                 </IconButton>
               </Link>
-              <IconButton onClick={onClickRemove} color="secondary">
+              <IconButton onClick={() => onClickRemove(id)} color="secondary">
                 <DeleteIcon/>
               </IconButton>
             </div>
